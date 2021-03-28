@@ -15,7 +15,7 @@ fn bubble_sort(mut vec: Vec<i32>) -> Vec<i32> {
     vec
 }
 
-fn bubble_sort_func() {
+pub fn bubble_sort_func() {
     let vec = vec![1, 49, 5, 32, 2, 5, 5, 1, 89, 8, 7, 6];
     println!("{:?}", vec);
 
