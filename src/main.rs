@@ -20,7 +20,7 @@ impl Display for NonDebug {
 }
 
 #[allow(dead_code)]
-fn NonDebug_test() {
+fn nondebug_test() {
     let a = NonDebug::new(1);
     let b = NonDebug::new(2);
 
@@ -36,6 +36,32 @@ fn invalid() -> ([i32; 3], &[i32]) {
 }
 */
 
+struct MyBox<T>(T);
+
+impl<T> MyBox<T> {
+    fn new(x: T) -> MyBox<T> {
+        MyBox(x)
+    }
+}
+
+use std::ops::Deref;
+
+impl<T> Deref for MyBox<T> {
+    type Target = T;
+
+    fn deref(&self) -> &T {
+        &self.0
+    }
+}
+
 fn main() {
-    
+    let x = 5;
+    let y = MyBox::new(x);
+    let z = &x;
+    let &w = z;
+
+    assert_eq!(5, x);
+    assert_eq!(5, *y);
+    assert_eq!(5, *z);
+    assert_eq!(5, w);
 }
