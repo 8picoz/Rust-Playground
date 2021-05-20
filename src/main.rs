@@ -36,6 +36,7 @@ fn invalid() -> ([i32; 3], &[i32]) {
 }
 */
 
+#[derive(Debug)]
 struct MyBox<T>(T);
 
 impl<T> MyBox<T> {
@@ -54,7 +55,7 @@ impl<T> Deref for MyBox<T> {
     }
 }
 
-fn main() {
+fn reference_test() {
     let x = 5;
     let y = MyBox::new(x);
     let z = &x;
@@ -64,4 +65,21 @@ fn main() {
     assert_eq!(5, *y);
     assert_eq!(5, *z);
     assert_eq!(5, w);
+}
+
+fn reference_test2() {
+    let x = MyBox::new(MyBox::new(1));
+
+    //Error: move occurs
+    //let y = *x;
+
+    //let y = &*x;
+    //Error: move occurs
+    //let &z = y;
+
+    println!("{:?}", x)
+}
+
+fn main() {
+
 }
