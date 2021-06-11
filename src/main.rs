@@ -45,7 +45,10 @@ impl<T> MyBox<T> {
     }
 }
 
+use std::num::ParseIntError;
 use std::ops::Deref;
+
+use adqselect::nth_element;
 
 impl<T> Deref for MyBox<T> {
     type Target = T;
@@ -82,4 +85,33 @@ fn reference_test2() {
 
 fn main() {
 
+}
+
+fn returm_type_test() -> String {
+    let a = "aiueo";
+    String::from(a)
+}
+
+#[derive(Debug)]
+enum DoubleError {
+    EmptyVec,
+    Parse(ParseIntError)
+}
+
+impl From<ParseIntError> for DoubleError {
+    fn from(err: ParseIntError) -> DoubleError {
+        DoubleError::Parse(err)
+    }
+}
+
+type Result<T> = std::result::Result<T, DoubleError>;
+
+#[derive(Debug)]
+struct EmptyVec;
+
+fn multiple_error(vec: Vec<&str>) -> Result<i32>{
+    let first = vec.first().ok_or(DoubleError::EmptyVec)?;
+    let parsed = first.parse::<i32>()?;
+
+    Ok(2 * parsed)
 }
