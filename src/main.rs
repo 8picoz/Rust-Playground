@@ -47,6 +47,8 @@ impl<T> MyBox<T> {
 
 use std::num::ParseIntError;
 use std::ops::Deref;
+use std::panic::catch_unwind;
+use std::panic::resume_unwind;
 
 use adqselect::nth_element;
 
@@ -84,12 +86,18 @@ fn reference_test2() {
 }
 
 fn main() {
+    let result = catch_unwind(|| {
+        panic!("panic!");
+    });
 
-}
+    println!("catched panic");
 
-fn returm_type_test() -> String {
-    let a = "aiueo";
-    String::from(a)
+    if let Err(e) = result {
+        println!("Error occur");
+        resume_unwind(e);
+    }
+
+    println!("end");
 }
 
 #[derive(Debug)]
