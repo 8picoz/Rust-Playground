@@ -1,3 +1,4 @@
+use std::any::type_name;
 use std::fmt::Display;
 
 
@@ -86,6 +87,17 @@ fn reference_test2() {
 }
 
 fn main() {
+    let arr = [1, 2, 3];
+    for i in arr {
+        print_type_of(i);
+    }
+}
+
+fn print_type_of<T>(_: T) {
+    println!("{}", std::any::type_name::<T>());
+}
+
+fn unwind() {
     let result = catch_unwind(|| {
         panic!("panic!");
     });
