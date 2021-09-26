@@ -52,6 +52,7 @@ use std::panic::catch_unwind;
 use std::panic::resume_unwind;
 
 use adqselect::nth_element;
+use rust_playground::asynchronous::asyncronous;
 
 impl<T> Deref for MyBox<T> {
     type Target = T;
@@ -86,11 +87,33 @@ fn reference_test2() {
     println!("{:?}", x)
 }
 
+//#[tokio::main]
+//async fn main() {
+//    asyncronous();
+//    println!("hello");
+//}
+
+use rand::Rng;
+
 fn main() {
-    let arr = [1, 2, 3];
-    for i in arr {
-        print_type_of(i);
+    let p = 0.99;
+    let mut result = 0.0;
+    let mut rng = rand::thread_rng();
+
+    let mut i = 0;
+    loop {
+        let rnd_value = rng.gen_range(0.0..=1.0);
+        
+        if rnd_value >= p {
+            break;
+        }
+
+        result += ((99.0_f32 / 100.0_f32).powi(i)) / (0.99_f32).powi(i);
+
+        i += 1;
     }
+
+    println!("{}", result);
 }
 
 fn print_type_of<T>(_: T) {
