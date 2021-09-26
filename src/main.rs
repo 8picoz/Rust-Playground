@@ -108,7 +108,7 @@ fn main() {
             break;
         }
 
-        result += ((99.0_f32 / 100.0_f32).powi(i)) / (0.99_f32).powi(i);
+        result += (0.99_f32.powi(i)) / (0.99_f32).powi(i + 1) as f32;
 
         i += 1;
     }
